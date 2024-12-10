@@ -1,3 +1,68 @@
-version: '3.1'
+version: '3.8'
+
 services:
-  serveur1 : 
+  nginx1:
+    image: nginx:latest
+    container_name: nginx1
+    ports:
+      - "8081:80"
+    volumes:
+      - ./nginx/nginx1.conf:/etc/nginx/nginx.conf:ro
+      - ./site1:/var/www/html
+    depends_on:
+      - php1
+    networks:
+      - laravel_network
+
+  nginx2:
+    image: nginx:latest
+    container_name: nginx2
+    ports:
+      - "8082:80"
+    volumes:
+      - ./nginx/nginx2.conf:/etc/nginx/nginx.conf:ro
+      - ./site1:/var/www/html
+    depends_on:
+      - php2
+    networks:
+      - laravel_network
+
+  php1:
+    build:
+      context: ./php
+    container_name: php1
+    volumes:
+      - ./site1:/var/www/html
+    networks:
+      - laravel_network
+
+  php2:
+    build:
+      context: ./php
+    container_name: php2
+    volumes:
+      - ./site2:/var/www/html
+    networks:
+      - laravel_network
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - laravel_network
+
+volumes:
+  db_data:
+
+networks:
+  laravel_network:
+    driver: bridge
