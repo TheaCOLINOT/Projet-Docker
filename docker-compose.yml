@@ -33,6 +33,8 @@ services:
     container_name: php1
     volumes:
       - ./site1:/var/www/html
+    depends_on:
+      - mysql
     networks:
       - laravel_network
 
@@ -42,6 +44,8 @@ services:
     container_name: php2
     volumes:
       - ./site2:/var/www/html
+    depends_on:
+      - mysql
     networks:
       - laravel_network
 
@@ -50,18 +54,18 @@ services:
     container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: laravel
-      MYSQL_USER: laravel
-      MYSQL_PASSWORD: laravel
+      MYSQL_DATABASE: example_app
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
     ports:
       - "3306:3306"
     volumes:
-      - db_data:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
     networks:
       - laravel_network
 
 volumes:
-  db_data:
+  mysql_data:
 
 networks:
   laravel_network:
