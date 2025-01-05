@@ -21,7 +21,7 @@ services:
       - "8082:80"
     volumes:
       - ./nginx/nginx2.conf:/etc/nginx/nginx.conf:ro
-      - ./site1:/var/www/html
+      - ./site2:/var/www/html
     depends_on:
       - php2
     networks:
