@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   nginx1:
     image: nginx:latest
@@ -54,7 +52,7 @@ services:
     container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: laravel
+      MYSQL_DATABASE: example_app
       MYSQL_USER: user
       MYSQL_PASSWORD: password
     ports:
