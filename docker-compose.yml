@@ -48,6 +48,8 @@ services:
       - ./site1:/var/www/html
     depends_on:
       - db
+    expose:
+      - 9000
     networks:
       - laravel_network
 
@@ -59,6 +61,8 @@ services:
       - ./site2:/var/www/html
     depends_on:
       - db
+    expose:
+      - 9000
     networks:
       - laravel_network
 
