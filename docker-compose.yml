@@ -1,6 +1,7 @@
 services:
   db:
     image: mysql:8.0
+    restart: always
     container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -11,11 +12,11 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-    networks:
-      - laravel_network
+
 
   nginx1:
     image: nginx:latest
+    restart: always
     container_name: nginx1
     ports:
       - "8081:80"
@@ -24,11 +25,11 @@ services:
       - ./site1:/var/www/html
     depends_on:
       - php1
-    networks:
-      - laravel_network
+
 
   nginx2:
     image: nginx:latest
+    restart: always
     container_name: nginx2
     ports:
       - "8082:80"
@@ -37,38 +38,31 @@ services:
       - ./site2:/var/www/html
     depends_on:
       - php2
-    networks:
-      - laravel_network
+
 
   php1:
+    restart: always
     build:
-      context: ./php
-    container_name: php1
-    volumes:
-      - ./site1:/var/www/html
+      context: ./site1
+      dockerfile: Dockerfile
     depends_on:
       - db
-    expose:
-      - 9000
-    networks:
-      - laravel_network
+    ports:
+      - 9000:9000
+    command: >
+      sh -c "php artisan migrate:fresh --seed && php-fpm" 
+
 
   php2:
+    restart: always
     build:
-      context: ./php
-    container_name: php2
-    volumes:
-      - ./site2:/var/www/html
+      context: ./site2
+      dockerfile: Dockerfile
     depends_on:
       - db
-    expose:
-      - 9001
-    networks:
-      - laravel_network
-      
+    ports:
+      - 9001:9000
+
+
 volumes:
   mysql_data:
-
-networks:
-  laravel_network:
-    driver: bridge
