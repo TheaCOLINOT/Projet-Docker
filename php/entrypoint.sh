@@ -5,11 +5,9 @@ set -e
 # Navigate to the application directory
 cd /var/www/html
 
-# Check if .env file exists, if not copy .env.example to .env
-if [ ! -f .env ]; then
-    echo "Creating .env file from .env.example..."
-    cp .env.example .env
-fi
+# Copie le fichier d'environment
+echo "Creating .env file from .env.example..."
+cp -f .env.example .env
 
 # Install PHP dependencies with Composer
 if [ ! -d "vendor" ]; then
