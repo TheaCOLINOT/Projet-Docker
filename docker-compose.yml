@@ -1,4 +1,19 @@
 services:
+  db:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: example_app
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - laravel_network
+
   nginx1:
     image: nginx:latest
     container_name: nginx1
@@ -32,7 +47,7 @@ services:
     volumes:
       - ./site1:/var/www/html
     depends_on:
-      - mysql
+      - db
     networks:
       - laravel_network
 
@@ -43,22 +58,7 @@ services:
     volumes:
       - ./site2:/var/www/html
     depends_on:
-      - mysql
-    networks:
-      - laravel_network
-
-  mysql:
-    image: mysql:8.0
-    container_name: mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: example_app
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
+      - db
     networks:
       - laravel_network
 
