@@ -29,6 +29,8 @@ services:
     build:
       context: ./php
     container_name: php1
+    environment:
+      - RUN_MIGRATIONS=true
     volumes:
       - ./site1:/var/www/html
     depends_on:
@@ -40,6 +42,8 @@ services:
     build:
       context: ./php
     container_name: php2
+    environment:
+      - RUN_MIGRATIONS=false
     volumes:
       - ./site2:/var/www/html
     depends_on:
@@ -53,8 +57,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: example_app
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
+      MYSQL_USER: lala
+      MYSQL_PASSWORD: lala
     ports:
       - "3306:3306"
     volumes:

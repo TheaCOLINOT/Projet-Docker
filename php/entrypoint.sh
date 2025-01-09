@@ -28,7 +28,10 @@ fi
 # Run Laravel setup commands
 echo "Running Laravel setup..."
 php artisan key:generate --force
-php artisan migrate:fresh --seed --force
+
+if [ "$RUN_MIGRATIONS" = "true" ]; then
+    php artisan migrate:fresh --seed --force
+fi
 
 # Start PHP-FPM
 exec "$@"
