@@ -23,7 +23,7 @@ services:
       - ./nginx/nginx1.conf:/etc/nginx/conf.d/default.conf
       - ./site1:/var/www/html
     depends_on:
-      - php
+      - php1
     networks:
       - laravel_network
 
@@ -36,11 +36,11 @@ services:
       - ./nginx/nginx2.conf:/etc/nginx/conf.d/default.conf
       - ./site2:/var/www/html
     depends_on:
-      - php
+      - php2
     networks:
       - laravel_network
 
-  php:
+  php1:
     build:
       context: ./php
     container_name: php1
@@ -48,9 +48,24 @@ services:
       - ./site1:/var/www/html
     depends_on:
       - db
+    expose:
+      - 9000
     networks:
       - laravel_network
 
+  php2:
+    build:
+      context: ./php
+    container_name: php2
+    volumes:
+      - ./site2:/var/www/html
+    depends_on:
+      - db
+    expose:
+      - 9001
+    networks:
+      - laravel_network
+      
 volumes:
   mysql_data:
 
