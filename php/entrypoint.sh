@@ -29,16 +29,25 @@ fi
 
 # Wait for database connection
 echo "Waiting for database connection..."
-until php artisan migrate:status > /dev/null 2>&1; do
+until mysqladmin ping -h db -u user -p'password' > /dev/null 2>&1; do
+    echo "Waiting for database connection..." >> /var/log/database.log
     sleep 5
 done
+
 echo "Database is ready."
 
-# Run Laravel setup commands
-echo "Running Laravel setup..."
-php artisan key:generate --force
-echo "Running migrations and seeders..."
-php artisan migrate:fresh --seed --force
+# Check if migrations have already been applied
+if ! php artisan migrate:status | grep -q "No migrations."; then
+    echo "Running migrations and seeders..."
+    php artisan migrate:fresh --seed
+    echo "Migrations and seeders executed successfully."
+else
+    echo "Database is already up-to-date."
+fi
 
-# Start PHP-FPM
-exec "$@"
+# Start PHP-FPM and capture logs for debugging
+echo "Starting PHP-FPM..."
+php-fpm -D -R > /var/log/php-fpm.log 2>&1
+
+# Keep the container running and redirect logs
+tail -f /var/log/php-fpm.log
