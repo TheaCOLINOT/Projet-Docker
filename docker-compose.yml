@@ -59,8 +59,58 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+<<<<<<< Updated upstream
     networks:
       - laravel_network
+=======
+      - ./mysql:/docker-entrypoint-initdb.d/init.sql
+
+  nginx1:
+    image: nginx:latest
+    restart: always
+    container_name: nginx1
+    ports:
+      - "8081:80"
+    volumes:
+      - ./nginx/nginx1.conf:/etc/nginx/conf.d/default.conf
+      - ./site1:/var/www/html
+    depends_on:
+      - php1
+
+  nginx2:
+    image: nginx:latest
+    restart: always
+    container_name: nginx2
+    ports:
+      - "8082:80"
+    volumes:
+      - ./nginx/nginx2.conf:/etc/nginx/conf.d/default.conf
+      - ./site2:/var/www/html
+    depends_on:
+      - php2
+
+  php1:
+    restart: always
+    build:
+      context: ./site1
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    ports:
+      - 9000:9000
+    command: >
+      sh -c "php artisan migrate:fresh --seed && php-fpm"
+
+  php2:
+    restart: always
+    build:
+      context: ./site2
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    ports:
+      - 9001:9000
+>>>>>>> Stashed changes
 
 volumes:
   mysql_data:
