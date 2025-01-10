@@ -1,54 +1,7 @@
 services:
-  nginx1:
-    image: nginx:latest
-    container_name: nginx1
-    ports:
-      - "8081:80"
-    volumes:
-      - ./nginx/nginx1.conf:/etc/nginx/nginx.conf:ro
-      - ./site1:/var/www/html
-    depends_on:
-      - php1
-    networks:
-      - laravel_network
-
-  nginx2:
-    image: nginx:latest
-    container_name: nginx2
-    ports:
-      - "8082:80"
-    volumes:
-      - ./nginx/nginx2.conf:/etc/nginx/nginx.conf:ro
-      - ./site2:/var/www/html
-    depends_on:
-      - php2
-    networks:
-      - laravel_network
-
-  php1:
-    build:
-      context: ./php
-    container_name: php1
-    volumes:
-      - ./site1:/var/www/html
-    depends_on:
-      - mysql
-    networks:
-      - laravel_network
-
-  php2:
-    build:
-      context: ./php
-    container_name: php2
-    volumes:
-      - ./site2:/var/www/html
-    depends_on:
-      - mysql
-    networks:
-      - laravel_network
-
-  mysql:
+  db:
     image: mysql:8.0
+    restart: always
     container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -59,10 +12,6 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-<<<<<<< Updated upstream
-    networks:
-      - laravel_network
-=======
       - ./mysql:/docker-entrypoint-initdb.d/init.sql
 
   nginx1:
@@ -110,11 +59,6 @@ services:
       - db
     ports:
       - 9001:9000
->>>>>>> Stashed changes
 
 volumes:
   mysql_data:
-
-networks:
-  laravel_network:
-    driver: bridge
