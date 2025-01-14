@@ -54,3 +54,20 @@ Attribution des tâches :
 Théa : Configuration des Dockerfiles pour PHP, Mise en place et tests de la base de données MySQL, connexion via Laravel.
 Mariam : Configuration de Nginx et personnalisation des fichiers de configuration.
 Danny :  Rédaction et mise en place du fichier docker-compose.yml, Debugging.
+
+
+Installation
+
+Clonez ce dépôt :
+git clone https://github.com/TheaCOLINOT/Projet-Docker.git
+cd Projet-Docker
+
+Lancez le projet avec Docker Compose :
+
+docker-compose up --build
+
+
+Accès aux services
+
+Serveur 1 : http://localhost:8081
+Serveur 2 : http://localhost:8082
