@@ -48,3 +48,9 @@ Tests des fonctionnalités automatisées au démarrage (installation des dépend
 
 Ajout de Traefik pour gérer le routage dynamique.
 Ajout d'un service pour les mails Mailship
+
+Attribution des tâches :
+
+Théa : Configuration des Dockerfiles pour PHP, Mise en place et tests de la base de données MySQL, connexion via Laravel.
+Mariam : Configuration de Nginx et personnalisation des fichiers de configuration.
+Danny :  Rédaction et mise en place du fichier docker-compose.yml, Debugging.
