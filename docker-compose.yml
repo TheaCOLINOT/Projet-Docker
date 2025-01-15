@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
   db:
     image: mysql:8.0
@@ -47,8 +49,12 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - db
+      - mailhog
     ports:
       - 9000:9000
+    environment:
+      MAIL_HOST: mailhog
+      MAIL_PORT: 1025
     command: >
       sh -c "php artisan migrate:fresh --seed && php-fpm"
 
@@ -59,8 +65,19 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - db
+      - mailhog
     ports:
       - 9001:9000
+    environment:
+      MAIL_HOST: mailhog
+      MAIL_PORT: 1025
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    ports:
+      - "1025:1025" # SMTP
+      - "8025:8025" # Web UI
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.6.2
