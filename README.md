@@ -96,7 +96,7 @@ S'assurer que les serveurs Nginx pointent vers les bons services PHP (avec fastc
 Tester l'accès aux deux serveurs via les navigateurs (http://localhost:8081/ et http://localhost:8082/).
 Personnaliser la vue welcome.blade.php pour afficher "Serveur 1" et "Serveur 2".
 
-Danny : Rédaction et mise en place du fichier docker-compose.yml, Debugging.
+Danny : Rédaction du fichier docker-compose.yml pour supporter le lancement des deux services Nginx ainsi que les deux services php avec le services MySQL. Debugging du projet pour que toutes les parties du projet (php, .env, nginx, dockerfile, .yml, MySQL) puissent se lancer de manière synchronisée. 
 
 Installation
 
