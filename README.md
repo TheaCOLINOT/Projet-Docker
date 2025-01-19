@@ -44,7 +44,24 @@ Vérification de l'accès aux deux serveurs via le navigateur.
 Inscription de deux utilisateurs et vérification dans la base de données.
 Tests des fonctionnalités automatisées au démarrage (installation des dépendances, migrations, etc.).
 
-Étape 7 : Ajouts personnels
+---
+
+## Attribution des tâches :
+
+Théa : Configuration des Dockerfiles pour PHP, Mise en place et tests de la base de données MySQL, connexion via Laravel.
+
+Mariam :
+Configurer les fichiers .env1/2 et nginx1/2 pour servir les deux sites Laravel.
+S'assurer que les serveurs Nginx pointent vers les bons services PHP (avec fastcgi_pass).
+Tester l'accès aux deux serveurs via les navigateurs (http://localhost:8081/ et http://localhost:8082/).
+Personnaliser la vue welcome.blade.php pour afficher "Serveur 1" et "Serveur 2".
+
+Danny : Rédaction du fichier docker-compose.yml pour supporter le lancement des deux services Nginx ainsi que les deux services php avec le services MySQL. Debugging du projet pour que toutes les parties du projet (php, .env, nginx, dockerfile, .yml, MySQL) puissent se lancer de manière synchronisée.
+
+---
+
+## Ajouts personnels
+
 Mariam:
 
 1. Configuration Complète de Nginx pour site1 et site2
@@ -86,19 +103,9 @@ Des labels Traefik ont été ajoutés aux services Nginx pour définir les règl
 Thea:
 Ajout d'un service pour les mails Mailship
 
-Attribution des tâches :
+---
 
-Théa : Configuration des Dockerfiles pour PHP, Mise en place et tests de la base de données MySQL, connexion via Laravel.
-
-Mariam :
-Configurer les fichiers .env1/2 et nginx1/2 pour servir les deux sites Laravel.
-S'assurer que les serveurs Nginx pointent vers les bons services PHP (avec fastcgi_pass).
-Tester l'accès aux deux serveurs via les navigateurs (http://localhost:8081/ et http://localhost:8082/).
-Personnaliser la vue welcome.blade.php pour afficher "Serveur 1" et "Serveur 2".
-
-Danny : Rédaction du fichier docker-compose.yml pour supporter le lancement des deux services Nginx ainsi que les deux services php avec le services MySQL. Debugging du projet pour que toutes les parties du projet (php, .env, nginx, dockerfile, .yml, MySQL) puissent se lancer de manière synchronisée. 
-
-Installation
+## Installation
 
 Clonez ce dépôt :
 git clone https://github.com/TheaCOLINOT/Projet-Docker.git
