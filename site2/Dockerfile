@@ -1,4 +1,4 @@
-# ./site1/Dockerfile
+# ./site2/Dockerfile
 
 FROM php:8.1-fpm
 
@@ -12,26 +12,12 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copier Composer depuis l'image officielle
-COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copier le code source (tout le dossier site1 dans /var/www/html/site1)
-COPY . /var/www/html/site2
+COPY ./entrypoint.sh /usr/local/bin/entrypoint.sh
 
 # Définir le répertoire de travail
-WORKDIR /var/www/html/site2
+WORKDIR /var/www/html/
 
-# Configurer les permissions
-RUN chown -R www-data:www-data /var/www/html/site2 \
-    && chmod -R 775 storage bootstrap/cache
 
-# Installer dépendances Laravel + Node
-RUN composer install --no-dev --optimize-autoloader \
-    && npm install && npm run build
-
-# Générer la clé de l'application Laravel
-RUN php artisan key:generate
-
-# Exposer le port PHP-FPM
-EXPOSE 9000
-
-CMD ["php-fpm"]
+ENTRYPOINT [ "sh" , "/usr/local/bin/entrypoint.sh" ]

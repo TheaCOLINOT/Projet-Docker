@@ -22,13 +22,14 @@ services:
     build:
       context: ./site1
       dockerfile: Dockerfile
+    volumes:
+      - ./site1:/var/www/html/
+    ports:
+      - "9000:9000"
     depends_on:
       - db
     networks:
       - traefik
-    # Optionnel : retirez ce "command" si vous préférez lancer la migration manuellement
-    command: >
-      sh -c "php artisan migrate:fresh --seed && php-fpm"
 
   php2:
     container_name: php2
@@ -36,6 +37,10 @@ services:
     build:
       context: ./site2
       dockerfile: Dockerfile
+    volumes:
+      - ./site2:/var/www/html/
+    ports:
+      - "9001:9000"
     depends_on:
       - db
     networks:
@@ -103,7 +108,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      - "8080:8080" # (facultatif) pour voir le dashboard Traefik
+      - "8090:8090" # (facultatif) pour voir le dashboard Traefik
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       # On monte le dossier qui contient le certificat auto-signé
