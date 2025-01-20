@@ -165,6 +165,20 @@ services:
     command: filebeat -e -strict.perms=false
     networks:
       - traefik
+  
+    minio:
+      build:
+        context: ./site2
+        dockerfile: Dockerfile
+      container_name: minio
+      ports:
+        - "9002:9000"
+        - "9003:9001"
+      environment:
+        MINIO_ROOT_USER: "admin"
+        MINIO_ROOT_PASSWORD: "password"
+      volumes:
+        - minio_data:/data
 
 networks:
   traefik:
@@ -173,3 +187,4 @@ networks:
 volumes:
   mysql_data:
   es_data:
+  minio_data:
