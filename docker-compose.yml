@@ -138,10 +138,16 @@ services:
         hard: -1
     volumes:
       - es_data:/usr/share/elasticsearch/data
-      - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     ports:
       - "9200:9200"
       - "9300:9300"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+
 
   kibana:
     image: docker.elastic.co/kibana/kibana:8.6.2
