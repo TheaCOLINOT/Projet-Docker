@@ -108,7 +108,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      - "8090:8090" # (facultatif) pour voir le dashboard Traefik
+      - "8090:8080" # (facultatif) pour voir le dashboard Traefik
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       # On monte le dossier qui contient le certificat auto-signé
@@ -132,6 +132,7 @@ services:
       - discovery.type=single-node
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "xpack.security.enabled=false"
     ulimits:
       memlock:
         soft: -1

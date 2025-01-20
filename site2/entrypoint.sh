@@ -16,6 +16,10 @@ if [ ! -d "node_modules" ]; then
     echo "Node.js dependencies installed and assets built successfully."
 fi
 
+chown -R www-data:www-data /var/www/html/
+chmod -R 775 storage bootstrap/cache
+chmod +x /usr/local/bin/entrypoint.sh
+
 echo "Waiting for database connection..."
 sleep 15
 
