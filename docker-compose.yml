@@ -139,6 +139,8 @@ services:
     volumes:
       - es_data:/usr/share/elasticsearch/data
       - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./elasticsearch-logs:/usr/share/elasticsearch/logs
+      
     ports:
       - "9200:9200"
       - "9300:9300"

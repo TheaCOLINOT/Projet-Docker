@@ -1,1 +1,2 @@
-logger.level: warn
+path.logs: /usr/share/elasticsearch/logs
+logger.level: info
