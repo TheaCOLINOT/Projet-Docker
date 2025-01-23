@@ -101,7 +101,39 @@ MySQL : Service MySQL avec un volume persistant et initialisé via le fichier in
 Des labels Traefik ont été ajoutés aux services Nginx pour définir les règles de routage et activer le SSL, facilitant ainsi la gestion centralisée des routes et des certificats.
 
 Thea:
-Ajout d'un service pour les mails Mailship
+Intégration d'Elasticsearch pour le Monitoring des Logs
+Elasticsearch dans ce projet permet de centraliser, analyser et visualiser les logs générés par les serveurs Nginx (nginx1 et nginx2).
+
+Logs Nginx :
+Les serveurs nginx1 et nginx2 génèrent des logs d'accès (access.log) et d'erreur (error.log), qui sont des données importantes pour le débogage et le suivi des performances.
+
+Filebeat :
+Filebeat est configuré pour surveiller en continu les fichiers de logs des deux serveurs.
+Il collecte ces logs et les envoie directement à Elasticsearch.
+
+Elasticsearch :
+Elasticsearch indexe les logs sous forme de documents JSON, ce qui permet des recherches rapides et efficaces.
+Les données sont structurées avec des champs comme les codes HTTP, les IPs des utilisateurs, les timestamps, etc.
+
+Kibana :
+Une interface graphique (Kibana) peut être utilisée pour visualiser les logs sous forme de graphiques et de tableaux de bord.
+Cela facilite l'analyse des tendances, la détection des erreurs et le suivi du trafic en temps réel.
+
+Redirection des logs d'Elasticsearch :
+Pour éviter que les logs d’Elasticsearch inondent le terminal tout en conservant une trace de ceux-ci, nous avons configuré la redirection des logs vers un dossier spécifique. Voici les étapes effectuées :
+
+Configuration des volumes pour stocker les logs :
+Nous avons ajouté un volume dans le fichier docker-compose.yml pour monter les logs d’Elasticsearch sur un dossier local. Cela permet de les sauvegarder sur le système hôte.
+Les logs générés par Elasticsearch sont désormais accessibles dans le dossier local elasticsearch-logs.
+
+Création du dossier local pour éviter les erreurs de montage :
+Avant de redémarrer les services, on créé manuellement le dossier local pour stocker les logs.
+
+Configuration de la rotation des logs via Docker :
+Nous avons ajouté une section logging pour limiter la taille des fichiers de logs et éviter qu'ils occupent trop d’espace disque.
+
+Si besoin, les logs peuvent également être consultés directement depuis le conteneur avec la commande suivante :
+docker logs elasticsearch
 
 ---
 
