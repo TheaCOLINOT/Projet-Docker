@@ -101,6 +101,7 @@ MySQL : Service MySQL avec un volume persistant et initialisé via le fichier in
 Des labels Traefik ont été ajoutés aux services Nginx pour définir les règles de routage et activer le SSL, facilitant ainsi la gestion centralisée des routes et des certificats.
 
 Thea:
+
 Intégration d'Elasticsearch pour le Monitoring des Logs
 Elasticsearch dans ce projet permet de centraliser, analyser et visualiser les logs générés par les serveurs Nginx (nginx1 et nginx2).
 
@@ -134,6 +135,17 @@ Nous avons ajouté une section logging pour limiter la taille des fichiers de lo
 
 Si besoin, les logs peuvent également être consultés directement depuis le conteneur avec la commande suivante :
 docker logs elasticsearch
+
+Bonus Mailhog :
+
+MailHog est un outil intégré dans notre environnement de développement pour intercepter et visualiser les emails envoyés par l'application sans qu'ils soient réellement transmis. Il est utilisé pour tester les fonctionnalités liées aux emails (inscriptions, notifications, newsletter etc.) en toute sécurité.
+
+Fonctionnement :
+Serveur SMTP factice : Les emails de l'application sont capturés par MailHog.
+Interface web : Les emails interceptés peuvent être consultés à l'adresse http://localhost:8025.
+Configuration Docker : MailHog est configuré comme un service dans docker-compose.yml.
+
+Pour tester, configurez votre application pour utiliser MailHog comme serveur SMTP (host: mailhog, port: 1025).
 
 ---
 
